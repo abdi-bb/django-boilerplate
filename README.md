@@ -1,5 +1,4 @@
 
-```markdown
 # Django Boilerplate
 
 Django Boilerplate is a template to simplify the initial setup of Django projects, created by [@abdi-bb](https://github.com/abdi-bb). It includes common configurations, dependencies, and best practices to save time when starting new Django projects.
