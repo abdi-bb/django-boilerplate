@@ -58,5 +58,4 @@ We welcome contributions from the community! Please read the [contribution guide
 
 ## License
 
-This project is licensed under the [MIT License](./LICENSE).
-```
+This project is licensed under the [MIT License](./LICENSE). Feel free to use, modify, and distribute the code for both commercial and non-commercial purposes.
