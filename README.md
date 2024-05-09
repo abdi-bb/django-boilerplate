@@ -20,6 +20,7 @@ To use Django Boilerplate, simply clone the repository and follow the setup inst
 ```bash
 git clone https://github.com/abdi-bb/django-boilerplate.git
 cd django-boilerplate
+cp .env.example .env 
 ```
 
 ### Development Mode
