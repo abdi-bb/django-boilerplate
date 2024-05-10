@@ -21,11 +21,11 @@ EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
 EMAIL_USE_TLS = True
 
 # Media and Static for production use whitenoise
-# MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']
+# MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware'] # If you want to use whitenoise instead of nginx
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "../", "media") # store user uploaded files for production
 
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage" # If you want to use whitenoise instead of nginx
 
 
 
