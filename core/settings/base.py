@@ -154,3 +154,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Celery
 CELERY_BROKER_URL = config("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = config("REDIS_BACKEND")
+
+# DRF Spectacular
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Project_name REST API",
+    "DESCRIPTION": "A project_name's API",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
