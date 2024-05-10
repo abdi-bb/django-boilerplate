@@ -21,15 +21,11 @@ EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
 EMAIL_USE_TLS = True
 
 # Media and Static for production use whitenoise
-MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']
+# MIDDLEWARE += ['whitenoise.middleware.WhiteNoiseMiddleware']
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "../", "media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "../", "media") # store user uploaded files for production
 
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "../", "static")
-
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 

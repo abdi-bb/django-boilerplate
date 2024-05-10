@@ -140,8 +140,10 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, '../', 'locale')]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-MEDIA_URL = '/media/' # url to access user uploaded files
+STATIC_URL = 'static/' # url to access static files for both development and production
+MEDIA_URL = '/media/' # url to access user uploaded files for both development and production
+
+STATIC_ROOT = os.path.join(BASE_DIR, "../", "static") # store static files for both development and production
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
