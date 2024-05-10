@@ -141,6 +141,7 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, '../', 'locale')]
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = '/media/' # url to access user uploaded files
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
