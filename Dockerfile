@@ -4,7 +4,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK 1
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /code
+WORKDIR /app
 
 COPY ./requirements.txt .
 
@@ -14,8 +14,8 @@ RUN apt-get update -y && \
     pip install -r requirements.txt
 
 COPY ./entrypoint.sh .
-RUN chmod +x /code/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
 COPY . .
 
-ENTRYPOINT ["/code/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]

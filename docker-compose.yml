@@ -5,7 +5,7 @@ services:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code
+      - .:/app
     # env_file:
     #   - ./.env
     ports:
@@ -28,7 +28,7 @@ services:
     build: .
     command: celery -A core worker -l info
     volumes:
-      - .:/code
+      - .:/app
     env_file:
       - ./.env
     depends_on:
