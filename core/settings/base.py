@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # Third party apps
     'rest_framework',
     'corsheaders',
+    'drf_spectacular',
 
     # Local apps
     'products',
@@ -151,14 +152,21 @@ STATIC_ROOT = os.path.join(BASE_DIR, "../", "static") # store static files for b
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# REST Framework
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
 # Celery
 CELERY_BROKER_URL = config("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = config("REDIS_BACKEND")
 
 # DRF Spectacular
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Project_name REST API",
-    "DESCRIPTION": "A project_name's API",
-    "VERSION": "1.0.0",
-    "SERVE_INCLUDE_SCHEMA": False,
+    'TITLE': 'Your Project API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
 }
