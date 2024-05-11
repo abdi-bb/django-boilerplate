@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   web:
+    container_name: web_prod
     build: .
     restart: always
     command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
@@ -15,7 +16,9 @@ services:
     depends_on:
       - redis
       - db
+    
   db:
+    container_name: db_prod
     image: postgres:latest
     restart: always
     volumes:
@@ -26,9 +29,11 @@ services:
       - POSTGRES_DB=${DB_NAME}
 
   redis:
+    container_name: redis_prod
     image: redis:latest
 
   celery:
+    container_name: celery_prod
     build: .
     restart: always
     command: celery -A core worker -l info
@@ -42,6 +47,7 @@ services:
       - web
 
   nginx:
+    container_name: nginx_prod
     build: ./nginx
     restart: always
     ports:
