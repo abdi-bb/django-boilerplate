@@ -44,11 +44,19 @@ INSTALLED_APPS = [
 
     # Third party apps
     'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'corsheaders',
     'drf_spectacular',
 
     # Local apps
     'products',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +73,9 @@ MIDDLEWARE = [
 
     # Locale middleware
     'django.middleware.locale.LocaleMiddleware',
+
+    # Allauth middleware
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -144,7 +155,8 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, '../', 'locale')]
 STATIC_URL = 'static/' # url to access static files for both development and production
 MEDIA_URL = '/media/' # url to access user uploaded files for both development and production
 
-STATIC_ROOT = os.path.join(BASE_DIR, "../", "static") # store static files for both development and production
+STATIC_ROOT = os.path.join(BASE_DIR, "../", "static") # store static files
+MEDIA_ROOT = os.path.join(BASE_DIR, "../", "media") # store user uploaded files
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
