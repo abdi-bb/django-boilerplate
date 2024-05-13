@@ -8,9 +8,12 @@ from decouple import config
 
 def main():
     """Run administrative tasks."""
-    if config('DEBUG') == False:
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', config("DJANGO_SETTINGS_MODULE_PROD"))
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', config("DJANGO_SETTINGS_MODULE_DEV"))
+    if config('DEBUG', default=False, cast=bool):
+        django_settings_module = config("DJANGO_SETTINGS_MODULE_DEV")
+    else:
+        django_settings_module = config("DJANGO_SETTINGS_MODULE_PROD")
+
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", django_settings_module)
 
     try:
         from django.core.management import execute_from_command_line
