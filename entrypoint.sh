@@ -11,6 +11,9 @@ if [ -n "$DEBUG" ] && [ "$DEBUG" != "True" ]; then
     echo 'PostgreSQL started'
 fi
 
+echo 'Making migrations...'
+python manage.py makemigrations
+
 echo 'Running migrations...'
 python manage.py migrate
 
