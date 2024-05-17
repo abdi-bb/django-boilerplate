@@ -3,7 +3,7 @@ from django.utils.translation import gettext as _
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 
-from users.models import Profile
+from accounts.models import Profile
 from .exceptions import (
     AccountDisabledException,
     AccountNotRegisteredException,

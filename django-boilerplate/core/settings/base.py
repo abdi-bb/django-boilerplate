@@ -161,7 +161,7 @@ INSTALLED_APPS += [
 
     # Local apps
     'products',
-    'users',
+    'accounts',
 ]
 
 # Middleware
@@ -228,9 +228,9 @@ SIMPLE_JWT = {
 # Rest auth settings
 REST_AUTH = {
     # Serializer settings
-    'LOGIN_SERIALIZER': 'users.api.serializers.UserLoginSerializer',
-    'REGISTER_SERIALIZER': 'users.api.serializers.UserRegisterSerializer',
-    'USER_DETAILS_SERIALIZER': 'users.api.serializers.UserDetailsSerializer',
+    'LOGIN_SERIALIZER': 'accounts.api.serializers.UserLoginSerializer',
+    'REGISTER_SERIALIZER': 'accounts.api.serializers.UserRegisterSerializer',
+    'USER_DETAILS_SERIALIZER': 'accounts.api.serializers.UserDetailsSerializer',
 
     # Password Settings
     'OLD_PASSWORD_FIELD_ENABLED': True,
