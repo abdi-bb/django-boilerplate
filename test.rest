@@ -2,8 +2,8 @@
 # Testing tokens (access=90days, refresh=180days)
 
 {
-  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzNzA3NDEwLCJpYXQiOjE3MTU5MzE0MTAsImp0aSI6Ijc2YmU3MTJmOGQzNTQ0MzlhNzU4NTFlZGZhY2IyY2NmIiwidXNlcl9pZCI6MTd9.v-J0i_ajBmuFptf4pcqwtCupOxYBovU_Y7HG-MQjxT4",
-  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczMTQ4MzQxMCwiaWF0IjoxNzE1OTMxNDEwLCJqdGkiOiI4MWRhZDFkMDkwYTI0YWMwOGZlZmVhNDUyZGZhOWQ5MyIsInVzZXJfaWQiOjE3fQ.z1jFDh2OASIk008wCyypvUtqbeAMpCAxtHxokfFRvyA",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzNzEwNTE0LCJpYXQiOjE3MTU5MzQ1MTQsImp0aSI6ImQ3YzkyNmE4NmM5NDRjNDQ4MTdlZGVkZThhMGIyYzhhIiwidXNlcl9pZCI6MTh9.seW7WucwwBluVen9Q9xg7v_5T1p74J_fmb_Xf71BFL8",
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczMTQ4NjUxNCwiaWF0IjoxNzE1OTM0NTE0LCJqdGkiOiIwYTVlYzIwNDIzNTg0N2QzYTcxNWFiMmIyMDlmMjFlYSIsInVzZXJfaWQiOjE4fQ.xawnI-4KaUMJR0D7qm6b84jCbCcv_WC34IWkpruduLE",
 }
 
 # 1. Register a new user
@@ -18,7 +18,7 @@ POST http://127.0.0.1:8000/api/users/registration/
 Content-Type: application/json
 
 {
-    "email": "testuser4@gmail.com",
+    "email": "testuser9@gmail.com",
     "password1": "mylogin8#",
     "password2": "mylogin8#",
     "first_name": "Test",
@@ -34,7 +34,7 @@ POST http://127.0.0.1:8000/api/users/registration/verify-email/
 Content-Type: application/json
 
 {
-    "key": "MTY:1s7rF1:cWoSPuAxqMxMq_W9JGKyu8CSu6hb1Ddi8RwDEbbEP3A"
+    "key": "MTk:1s7uhS:wKsf6A2YSknN1tEWncAPvpM4ueLib6ZiUvgpWAZeDB0"
 }
 
 
@@ -60,7 +60,7 @@ POST http://127.0.0.1:8000/api/users/login/
 Content-Type: application/json
 
 {
-    "email": "testuser4@gmail.com",
+    "email": "testuser9@gmail.com",
     "password": "mylogin8#"
 }
 
@@ -126,7 +126,7 @@ Content-Type: application/json
 # last_name
 # Returns pk, username, email, first_name, last_name
 http://127.0.0.1:8000/api/users/user/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1OTI4ODg1LCJpYXQiOjE3MTU5Mjg1ODUsImp0aSI6ImFlMDhlOTFkMTA0YzQwNzRiMzNkMjcxMGEzYzYxYmUzIiwidXNlcl9pZCI6MTd9.vSMrUvfEGvlkZetMvLUuvRcIYnNAomAzq9kXhUzWrAE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzNzEwNTE0LCJpYXQiOjE3MTU5MzQ1MTQsImp0aSI6ImQ3YzkyNmE4NmM5NDRjNDQ4MTdlZGVkZThhMGIyYzhhIiwidXNlcl9pZCI6MTh9.seW7WucwwBluVen9Q9xg7v_5T1p74J_fmb_Xf71BFL8
 
 
 # 10. Update the user profile (related to the profile data not the auth)

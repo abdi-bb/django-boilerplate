@@ -21,8 +21,8 @@ from .permissions import (
 from .serializers import (
     UserRegisterSerializer,
     UserLoginSerializer,
-    UserSerializer,
-    ProfileSerializer,
+    UserDetailsSerializer,
+    ProfileDetailsSerializer,
 )
 
 User = get_user_model()
@@ -70,13 +70,13 @@ class GoogleLogin(SocialLoginView):
     client_class = OAuth2Client
 
 
-class ProfileAPIView(RetrieveUpdateAPIView):
+class ProfileDetailsAPIView(RetrieveUpdateAPIView):
     """
     Get, Update user profile
     """
 
     queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
+    serializer_class = ProfileDetailsSerializer
     permission_classes = (IsUserProfileOwner,)
 
     def get_object(self):
@@ -84,13 +84,13 @@ class ProfileAPIView(RetrieveUpdateAPIView):
 
 
 
-class UserAPIView(RetrieveAPIView):
+class UserDetailsAPIView(RetrieveAPIView):
     """
     Get user details
     """
 
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserDetailsSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_object(self):

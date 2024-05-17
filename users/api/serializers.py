@@ -13,7 +13,7 @@ from .exceptions import (
 User = get_user_model()
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ProfileDetailsSerializer(serializers.ModelSerializer):
     """
     Serializer class to convert Profile model instances to JSON.
     """
@@ -26,12 +26,12 @@ class ProfileSerializer(serializers.ModelSerializer):
             'updated_at',
         )
 
-class UserSerializer(serializers.ModelSerializer):
+class UserDetailsSerializer(serializers.ModelSerializer):
     """
     Serializer class to convert User model instances to JSON.
     """
 
-    profile = ProfileSerializer(read_only=True)
+    profile = ProfileDetailsSerializer(read_only=True)
 
     class Meta:
         model = User
@@ -70,6 +70,31 @@ class UserRegisterSerializer(RegisterSerializer):
             )
         
         return validated_data
+    
+    # Override the get_cleaned_data method to include first_name and last_name
+    def get_cleaned_data(self):
+        """
+        Get the cleaned data.
+        """
+        
+        cleaned_data = super().get_cleaned_data()
+        cleaned_data['first_name'] = self.validated_data.get('first_name', '')
+        cleaned_data['last_name'] = self.validated_data.get('last_name', '')
+        
+        return cleaned_data
+    
+    # Override the save method to include first_name and last_name
+    def save(self, request):
+        """
+        Save the user.
+        """
+        
+        user = super().save(request)
+        user.first_name = self.validated_data.get('first_name', '')
+        user.last_name = self.validated_data.get('last_name', '')
+        user.save()
+
+        return user
     
 class UserLoginSerializer(serializers.Serializer):
     """

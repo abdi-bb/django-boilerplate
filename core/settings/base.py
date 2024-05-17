@@ -228,8 +228,9 @@ SIMPLE_JWT = {
 # Rest auth settings
 REST_AUTH = {
     # Serializer settings
-    # 'REGISTER_SERIALIZER': 'users.serializers.UserRegisterSerializer',
-    # 'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
+    'LOGIN_SERIALIZER': 'users.api.serializers.UserLoginSerializer',
+    'REGISTER_SERIALIZER': 'users.api.serializers.UserRegisterSerializer',
+    'USER_DETAILS_SERIALIZER': 'users.api.serializers.UserDetailsSerializer',
 
     # Password Settings
     'OLD_PASSWORD_FIELD_ENABLED': True,
