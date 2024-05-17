@@ -1,3 +1,11 @@
+# Django Rest Auth
+# Testing tokens (access=90days, refresh=180days)
+
+{
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzNzA3NDEwLCJpYXQiOjE3MTU5MzE0MTAsImp0aSI6Ijc2YmU3MTJmOGQzNTQ0MzlhNzU4NTFlZGZhY2IyY2NmIiwidXNlcl9pZCI6MTd9.v-J0i_ajBmuFptf4pcqwtCupOxYBovU_Y7HG-MQjxT4",
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczMTQ4MzQxMCwiaWF0IjoxNzE1OTMxNDEwLCJqdGkiOiI4MWRhZDFkMDkwYTI0YWMwOGZlZmVhNDUyZGZhOWQ5MyIsInVzZXJfaWQiOjE3fQ.z1jFDh2OASIk008wCyypvUtqbeAMpCAxtHxokfFRvyA",
+}
+
 # 1. Register a new user
 # Registration
 # /users/registration/ (POST)
@@ -8,10 +16,9 @@
 # email
 POST http://127.0.0.1:8000/api/users/registration/
 Content-Type: application/json
-X-CSRFToken: SUmC4lMyUU9Ou1FcC5bR1SnEo4nVVNV2
 
 {
-    "email": "testuser@gmail.com",
+    "email": "testuser4@gmail.com",
     "password1": "mylogin8#",
     "password2": "mylogin8#",
     "first_name": "Test",
@@ -23,11 +30,11 @@ X-CSRFToken: SUmC4lMyUU9Ou1FcC5bR1SnEo4nVVNV2
 # /users/registration/verify-email/ (POST)
 # key
 # Note If you set account email verification as mandatory, you have to add the VerifyEmailView with the used name. You need to import the view: from dj_rest_auth.registration.views import VerifyEmailView. Then add the url with the corresponding name: path('users/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent') to the urlpatterns list.
-POST http://127.0.0.1:8000/api/users/verify-email/
+POST http://127.0.0.1:8000/api/users/registration/verify-email/
 Content-Type: application/json
 
 {
-    "key": "MTI:1s7WiM:bkVbMLdEXG4rsGkJtmzxpTsF0TbBJkBZQ0uT75nLwQQ"
+    "key": "MTY:1s7rF1:cWoSPuAxqMxMq_W9JGKyu8CSu6hb1Ddi8RwDEbbEP3A"
 }
 
 
@@ -39,7 +46,7 @@ POST http://127.0.0.1:8000/api/users/registration/resend-email/
 Content-Type: application/json
 
 {
-    "email": "testuser@gmail.com"
+    "email": "notverified@gmail.com"
 }
 
 
@@ -53,7 +60,7 @@ POST http://127.0.0.1:8000/api/users/login/
 Content-Type: application/json
 
 {
-    "email": "testuser@gmail.com",
+    "email": "testuser4@gmail.com",
     "password": "mylogin8#"
 }
 
@@ -62,7 +69,6 @@ Content-Type: application/json
 # /users/logout/ (POST)
 # Note ACCOUNT_LOGOUT_ON_GET = True to allow logout using GET - this is the exact same configuration from allauth. NOT recommended, see: http://django-allauth.readthedocs.io/en/latest/views.html#logout
 POST http://127.0.0.1:8000/api/users/logout/
-Authorization: Token 994
 Content-Type: application/json
 
 
@@ -73,7 +79,7 @@ POST http://127.0.0.1:8000/api/users/password/reset/
 Content-Type: application/json
 
 {
-    "email": "testuser@gmail.com"
+    "email": "testuser4@gmail.com"
 }
 
 
@@ -88,8 +94,8 @@ POST http://127.0.0.1:8000/api/users/password/reset/confirm/
 Content-Type: application/json
 
 {
-    "uid": "1",
-    "token": "1-",
+    "uid": "h",
+    "token": "c75s3e-d8ea0449cab56609250453be39dd466b",
     "new_password1": "mylogo8#",
     "new_password2": "mylogo8#"
 }
@@ -103,7 +109,7 @@ Content-Type: application/json
 # Note OLD_PASSWORD_FIELD_ENABLED = True to use old_password.
 # Note LOGOUT_ON_PASSWORD_CHANGE = False to keep the user logged in after password change
 POST http://127.0.0.1:8000/api/users/password/change/
-Authorization: Token 994
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1OTI4ODg1LCJpYXQiOjE3MTU5Mjg1ODUsImp0aSI6ImFlMDhlOTFkMTA0YzQwNzRiMzNkMjcxMGEzYzYxYmUzIiwidXNlcl9pZCI6MTd9.vSMrUvfEGvlkZetMvLUuvRcIYnNAomAzq9kXhUzWrAE
 Content-Type: application/json
 
 {
@@ -120,13 +126,26 @@ Content-Type: application/json
 # last_name
 # Returns pk, username, email, first_name, last_name
 http://127.0.0.1:8000/api/users/user/
-Authorization: Token 994
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1OTI4ODg1LCJpYXQiOjE3MTU5Mjg1ODUsImp0aSI6ImFlMDhlOTFkMTA0YzQwNzRiMzNkMjcxMGEzYzYxYmUzIiwidXNlcl9pZCI6MTd9.vSMrUvfEGvlkZetMvLUuvRcIYnNAomAzq9kXhUzWrAE
 
 
 # 10. Update the user profile (related to the profile data not the auth)
 # Profile
 # /users/profile/ (GET, PUT, PATCH)
 http://127.0.0.1:8000/api/users/profile/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1OTI4ODg1LCJpYXQiOjE3MTU5Mjg1ODUsImp0aSI6ImFlMDhlOTFkMTA0YzQwNzRiMzNkMjcxMGEzYzYxYmUzIiwidXNlcl9pZCI6MTd9.vSMrUvfEGvlkZetMvLUuvRcIYnNAomAzq9kXhUzWrAE
+
+# 11. Update the user profile (related to the profile data not the auth)
+# Profile
+# /users/profile/ (GET, PUT, PATCH)
+PUT http://127.0.0.1:8000/api/users/profile/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzNzA3MDYyLCJpYXQiOjE3MTU5MzEwNjIsImp0aSI6IjU2NWYwMTUwNDcyMzRmZjRiMjAyZDY4YjE2Mjk3ZDFjIiwidXNlcl9pZCI6MTd9.z2fLxqWgT83wPVMUjx5xUivX90JTId4eVI7nWKZCwY4
+Content-Type: application/json
+
+{
+    "bio": "I am a software engineer!"
+}
+
 
 
 # 11. Verify the jwt access token
@@ -139,7 +158,7 @@ POST http://127.0.0.1:8000/api/users/token/verify/
 Content-Type: application/json
 
 {
-    "token": "994"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzNzA3NDEwLCJpYXQiOjE3MTU5MzE0MTAsImp0aSI6Ijc2YmU3MTJmOGQzNTQ0MzlhNzU4NTFlZGZhY2IyY2NmIiwidXNlcl9pZCI6MTd9.v-J0i_ajBmuFptf4pcqwtCupOxYBovU_Y7HG-MQjxT4"
 }
 
 
@@ -153,7 +172,7 @@ POST http://127.0.0.1:8000/api/users/token/refresh/
 Content-Type: application/json
 
 {
-    "refresh": "994"
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczMTQ4MzQxMCwiaWF0IjoxNzE1OTMxNDEwLCJqdGkiOiI4MWRhZDFkMDkwYTI0YWMwOGZlZmVhNDUyZGZhOWQ5MyIsInVzZXJfaWQiOjE3fQ.z1jFDh2OASIk008wCyypvUtqbeAMpCAxtHxokfFRvyA"
 }
 
 
