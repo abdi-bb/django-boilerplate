@@ -1,0 +1,169 @@
+# 1. Register a new user
+# Registration
+# /users/registration/ (POST)
+# first_name
+# last_name
+# password1
+# password2
+# email
+POST http://127.0.0.1:8000/api/users/registration/
+Content-Type: application/json
+X-CSRFToken: SUmC4lMyUU9Ou1FcC5bR1SnEo4nVVNV2
+
+{
+    "email": "testuser@gmail.com",
+    "password1": "mylogin8#",
+    "password2": "mylogin8#",
+    "first_name": "Test",
+    "last_name": "User"
+}
+
+
+# 2. Verify email for the registered new user
+# /users/registration/verify-email/ (POST)
+# key
+# Note If you set account email verification as mandatory, you have to add the VerifyEmailView with the used name. You need to import the view: from dj_rest_auth.registration.views import VerifyEmailView. Then add the url with the corresponding name: path('users/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent') to the urlpatterns list.
+POST http://127.0.0.1:8000/api/users/verify-email/
+Content-Type: application/json
+
+{
+    "key": "MTI:1s7WiM:bkVbMLdEXG4rsGkJtmzxpTsF0TbBJkBZQ0uT75nLwQQ"
+}
+
+
+# 3. Resend email verification in case the user requests it
+# /users/registration/resend-email/ (POST)
+# email
+# Resends the email verification
+POST http://127.0.0.1:8000/api/users/registration/resend-email/
+Content-Type: application/json
+
+{
+    "email": "testuser@gmail.com"
+}
+
+
+# 4. Login the email verified user
+# Basic
+# /users/login/ (POST)
+# email
+# password
+# Returns Token key
+POST http://127.0.0.1:8000/api/users/login/
+Content-Type: application/json
+
+{
+    "email": "testuser@gmail.com",
+    "password": "mylogin8#"
+}
+
+
+# 5. Logout the logged in user
+# /users/logout/ (POST)
+# Note ACCOUNT_LOGOUT_ON_GET = True to allow logout using GET - this is the exact same configuration from allauth. NOT recommended, see: http://django-allauth.readthedocs.io/en/latest/views.html#logout
+POST http://127.0.0.1:8000/api/users/logout/
+Authorization: Token 994
+Content-Type: application/json
+
+
+# 6. Reset password for the user in case they forget it
+# /users/password/reset/ (POST)
+# email
+POST http://127.0.0.1:8000/api/users/password/reset/
+Content-Type: application/json
+
+{
+    "email": "testuser@gmail.com"
+}
+
+
+# 7. Confirm the password reset (automatically triggered by the reset password)
+# /users/password/reset/confirm/ (POST)
+# uid
+# token
+# new_password1
+# new_password2
+# Note uid and token are sent in email after calling /users/password/reset/
+POST http://127.0.0.1:8000/api/users/password/reset/confirm/
+Content-Type: application/json
+
+{
+    "uid": "1",
+    "token": "1-",
+    "new_password1": "mylogo8#",
+    "new_password2": "mylogo8#"
+}
+
+
+# 8. Change password for the logged in user
+# /users/password/change/ (POST)
+# new_password1
+# new_password2
+# old_password
+# Note OLD_PASSWORD_FIELD_ENABLED = True to use old_password.
+# Note LOGOUT_ON_PASSWORD_CHANGE = False to keep the user logged in after password change
+POST http://127.0.0.1:8000/api/users/password/change/
+Authorization: Token 994
+Content-Type: application/json
+
+{
+    "new_password1": "mylogin8#",
+    "new_password2": "mylogin8#",
+    "old_password": "mylogo8#"
+}
+
+
+# 9. Update the user (related to the auth user)
+# /users/user/ (GET, PUT, PATCH)
+# username
+# first_name
+# last_name
+# Returns pk, username, email, first_name, last_name
+http://127.0.0.1:8000/api/users/user/
+Authorization: Token 994
+
+
+# 10. Update the user profile (related to the profile data not the auth)
+# Profile
+# /users/profile/ (GET, PUT, PATCH)
+http://127.0.0.1:8000/api/users/profile/
+
+
+# 11. Verify the jwt access token
+# /users/token/verify/ (POST)
+# token
+# Returns an empty JSON object.
+# Note USE_JWT = True to use token/verify/ route.
+# Note Takes a token and indicates if it is valid. This view provides no information about a token’s fitness for a particular use. Will return a HTTP 200 OK in case of a valid token and HTTP 401 Unauthorized with {"detail": "Token is invalid or expired", "code": "token_not_valid"} in case of a invalid or expired token.
+POST http://127.0.0.1:8000/api/users/token/verify/
+Content-Type: application/json
+
+{
+    "token": "994"
+}
+
+
+# 12. Refresh the jwt access token using the refresh token
+# /users/token/refresh/ (POST) (see also)
+# refresh
+# Returns access
+# Note USE_JWT = True to use token/refresh/ route.
+# Note Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid. HTTP 401 Unauthorized with {"detail": "Token is invalid or expired", "code": "token_not_valid"} in case of a invalid or expired token.
+POST http://127.0.0.1:8000/api/users/token/refresh/
+Content-Type: application/json
+
+{
+    "refresh": "994"
+}
+
+
+# 13. Login using google
+# /users/google/ (POST)
+# access_token
+# Returns Token key
+POST http://127.0.0.1:8000/api/users/google/
+Content-Type: application/json
+
+{
+    "access_token": "ya"
+}

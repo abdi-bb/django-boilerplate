@@ -12,10 +12,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
-import os
-
-from decouple import config, Csv
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-rtt5va)ck5%&rpi5x!n%^rj9lkzzg3vk3k5mo!#0p$6vvv5oq='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG", default=False, cast=bool)
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -41,41 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # Third party apps
-    'rest_framework',
-    'rest_framework.authtoken',
-    'dj_rest_auth',
-    'dj_rest_auth.registration',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'corsheaders',
-    'drf_spectacular',
-
-    # Local apps
-    'products',
-    'users',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-
-    # Cors middleware
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    # Locale middleware
-    'django.middleware.locale.LocaleMiddleware',
-
-    # Allauth middleware
-    'allauth.account.middleware.AccountMiddleware'
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -140,6 +111,69 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.0/howto/static-files/
+
+STATIC_URL = 'static/'
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+#################################
+#################################
+#####* My Custom Settings *######
+#################################
+#################################
+
+import os
+
+from decouple import config, Csv
+
+# Secret Key
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-rtt5va)ck5%&rpi5x!n%^rj9lkzzg3vk3k5mo!#0p$6vvv5oq=')
+
+# Debug
+DEBUG = config("DEBUG", default=False, cast=bool)
+
+# Allowed Hosts
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv(), default=['*'])
+
+# Installed Apps
+INSTALLED_APPS += [
+    # Third party apps
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt', # Uncomment when using JWT
+    'dj_rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'dj_rest_auth.registration',
+    'corsheaders',
+    'drf_spectacular',
+
+    # Local apps
+    'products',
+    'users',
+]
+
+# Middleware
+MIDDLEWARE += [
+    # Cors middleware
+    'corsheaders.middleware.CorsMiddleware',
+    # Allauth middleware
+    'allauth.account.middleware.AccountMiddleware',
+    # Locale middleware
+    'django.middleware.locale.LocaleMiddleware',
+]
+
 # Locale Settings
 LANGUAGES = [
     ('en', 'English'),
@@ -148,31 +182,59 @@ LANGUAGES = [
 ]
 LOCALE_PATHS = [os.path.join(BASE_DIR, '../', 'locale')]
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
+# Static files settings
 STATIC_URL = 'static/' # url to access static files for both development and production
 MEDIA_URL = '/media/' # url to access user uploaded files for both development and production
-
 STATIC_ROOT = os.path.join(BASE_DIR, "../", "static") # store static files
 MEDIA_ROOT = os.path.join(BASE_DIR, "../", "media") # store user uploaded files
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Authentication Backends
+AUTHENTICATION_BACKENDS = [
+    # allauth specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+    # Needed to login by username in Django admin, regardless of allauth
+    'django.contrib.auth.backends.ModelBackend',
+    # Email login
+
+]
+
+# Identify user using email
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 
-# REST Framework
+
+# Rest Framework settings
 REST_FRAMEWORK = {
-    # YOUR SETTINGS
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.SessionAuthentication',
+    #     'rest_framework.authentication.TokenAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication', # Uncomment when using JWT
+    ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-# Celery
-CELERY_BROKER_URL = config("CELERY_BROKER_URL")
-CELERY_RESULT_BACKEND = config("REDIS_BACKEND")
+# Rest auth settings
+REST_AUTH = {
+    # Serializer settings
+    # 'REGISTER_SERIALIZER': 'users.serializers.UserRegisterSerializer',
+    # 'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
+
+    # Password Settings
+    'OLD_PASSWORD_FIELD_ENABLED': True,
+    'LOGOUT_ON_PASSWORD_CHANGE': True,
+
+    # from the library demo # Uncomment when using JWT
+    'SESSION_LOGIN': True,
+    'USE_JWT': True,
+    'JWT_AUTH_COOKIE': 'email-auth',
+    'JWT_AUTH_REFRESH_COOKIE': 'email-refresh-token',
+    'JWT_AUTH_HTTPONLY': False,
+}
 
 # DRF Spectacular
 SPECTACULAR_SETTINGS = {
@@ -182,3 +244,31 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
 }
+
+# activate the email account once the user clicks on the link
+ACCOUNT_CONFACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+# Login url
+LOGIN_URL = 'https://localhost:8000/users/login'
+
+# Django email backend settings
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+# Local email settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# CORS settings
+# For demo purposes only. Use a white list in the real world.
+CORS_ORIGIN_ALLOW_ALL = True
+
+# Site ID
+SITE_ID = 1
+
+# Celery
+CELERY_BROKER_URL = config("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = config("REDIS_BACKEND")
