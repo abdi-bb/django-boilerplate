@@ -19,9 +19,9 @@ from .permissions import (
     IsUserProfileOwner,
 )
 from .serializers import (
-    UserRegisterSerializer,
-    UserLoginSerializer,
-    UserDetailsSerializer,
+    CustomUserRegisterSerializer,
+    CustomUserLoginSerializer,
+    CustomUserDetailsSerializer,
     ProfileDetailsSerializer,
 )
 
@@ -32,7 +32,7 @@ class UserRegisterationAPIView(RegisterView):
     Register new users using email and password.
     """
 
-    serializer_class = UserRegisterSerializer
+    serializer_class = CustomUserRegisterSerializer
 
     def create(self, request, *args, **kwargs):
         """
@@ -57,7 +57,7 @@ class UserLoginAPIView(LoginView):
     Authenticate existing users using email and password.
     """
 
-    serializer_class = UserLoginSerializer
+    serializer_class = CustomUserLoginSerializer
 
 
 class GoogleLogin(SocialLoginView):
@@ -90,7 +90,7 @@ class UserDetailsAPIView(RetrieveAPIView):
     """
 
     queryset = User.objects.all()
-    serializer_class = UserDetailsSerializer
+    serializer_class = CustomUserDetailsSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_object(self):

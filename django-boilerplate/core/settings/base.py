@@ -134,6 +134,9 @@ import os
 
 from decouple import config, Csv
 
+# Auth User model
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
 # Secret Key
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-rtt5va)ck5%&rpi5x!n%^rj9lkzzg3vk3k5mo!#0p$6vvv5oq=')
 
@@ -200,6 +203,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Identify user using email
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None # Tell allauth that the User model has no username field
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_REQUIRED = True
@@ -211,8 +215,8 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 # Rest Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'rest_framework.authentication.SessionAuthentication',
-    #     'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication', # Uncomment when using JWT
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
@@ -228,9 +232,9 @@ SIMPLE_JWT = {
 # Rest auth settings
 REST_AUTH = {
     # Serializer settings
-    'LOGIN_SERIALIZER': 'accounts.api.serializers.UserLoginSerializer',
-    'REGISTER_SERIALIZER': 'accounts.api.serializers.UserRegisterSerializer',
-    'USER_DETAILS_SERIALIZER': 'accounts.api.serializers.UserDetailsSerializer',
+    'LOGIN_SERIALIZER': 'accounts.api.serializers.CustomUserLoginSerializer',
+    'REGISTER_SERIALIZER': 'accounts.api.serializers.CustomUserRegisterSerializer',
+    'USER_DETAILS_SERIALIZER': 'accounts.api.serializers.CustomUserDetailsSerializer',
 
     # Password Settings
     'OLD_PASSWORD_FIELD_ENABLED': True,

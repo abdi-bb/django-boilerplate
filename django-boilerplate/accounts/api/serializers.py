@@ -26,7 +26,7 @@ class ProfileDetailsSerializer(serializers.ModelSerializer):
             'updated_at',
         )
 
-class UserDetailsSerializer(serializers.ModelSerializer):
+class CustomUserDetailsSerializer(serializers.ModelSerializer):
     """
     Serializer class to convert User model instances to JSON.
     """
@@ -44,7 +44,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
             'profile',
         )
 
-class UserRegisterSerializer(RegisterSerializer):
+class CustomUserRegisterSerializer(RegisterSerializer):
     """
     Serializer class to register a new user using email.
     """
@@ -96,7 +96,7 @@ class UserRegisterSerializer(RegisterSerializer):
 
         return user
     
-class UserLoginSerializer(serializers.Serializer):
+class CustomUserLoginSerializer(serializers.Serializer):
     """
     Serializer class to login a user using email.
     """
