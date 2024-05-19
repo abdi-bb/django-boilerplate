@@ -269,7 +269,7 @@ DJOSER = {
 
     # Registration and Password settings
     'LOGIN_FIELD': 'email',
-    # 'USER_CREATE_PASSWORD_RETYPE': True,
+    'USER_CREATE_PASSWORD_RETYPE': True,
     'USERNAME_RESET_CONFIRM_RETYPE': True,
     'SET_USERNAME_RETYPE': True,
     'SET_PASSWORD_RETYPE': True,

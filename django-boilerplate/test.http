@@ -1,0 +1,236 @@
+# POST
+# 1. /api/auth/users/
+POST http://127.0.0.1:8000/api/auth/users/
+Content-Type: application/json
+
+{
+    "email": "abdinn@gmail.com",
+    "first_name": "Abdin",
+    "last_name": "Mohammed",
+    "password": "mylogin8#",
+    "re_password": "mylogin8#"
+}
+
+# POST
+# 2. /api/auth/users/activation/
+POST http://127.0.0.1:8000/api/auth/users/activation/
+Content-Type: application/json
+
+{
+    "uid": "MTU",
+    "token": "c7anej-52570995fe58932be86a2ab9c2a4360a"
+}
+
+# POST
+# 3. /api/auth/users/resend_activation/
+POST http://127.0.0.1:8000/api/auth/users/resend_activation/
+Content-Type: application/json
+
+{
+    "email": "abdinn@gmail.com"
+}
+
+# POST
+# 4. /api/auth/users/token/login/
+POST http://127.0.0.1:8000/api/auth/users/token/login/ 
+Content-Type: application/json
+
+{
+    "email": "abdin@gmail.com",
+    "password": "mylogin8#"
+}
+
+# GET
+# 5. /api/auth/users/me/
+GET http://127.0.0.1:8000/api/auth/users/me/
+Authorization: Token 6c28ac646ae1d66222a17ab2684f5e42cc30f1db
+
+
+# GET
+# 6. /api/auth/users/
+GET http://127.0.0.1:8000/api/auth/users/
+Authorization: Token 6c28ac646ae1d66222a17ab2684f5e42cc30f1db
+
+# GET
+# 7. /api/auth/users/{id}/
+GET http://127.0.0.1:8000/api/auth/users/15/
+Authorization: Token 3a3de06aab390c3af5534e877c4107b4ae2da7ef
+
+# PUT
+# 8. /api/auth/users/{id}/
+PUT http://127.0.0.1:8000/api/auth/users/14/
+Content-Type: application/json
+Authorization: Token 6c28ac646ae1d66222a17ab2684f5e42cc30f1db
+
+{
+    "email": "abdin@gmail.com",
+    "first_name": "Abdi",
+    "last_name": "Mohammed",
+    "password": "mylogin8#",
+    "re_password": "mylogin8#"
+}
+
+
+# PATCH
+# 9. /api/auth/users/{id}/
+PATCH http://127.0.0.1:8000/api/auth/users/14/
+Content-Type: application/json
+Authorization: Token 6c28ac646ae1d66222a17ab2684f5e42cc30f1db
+
+{
+    "email": "abdin@gmail.com",
+    "first_name": "Abdin",
+    "last_name": "Mohammed",
+    "password": "mylogin8#",
+    "re_password": "mylogin8#"
+}
+
+
+# DELETE
+# 10. /api/auth/users/{id}/
+DELETE http://127.0.0.1:8000/api/auth/users/14/
+Content-Type: application/json
+Authorization: Token 6c28ac646ae1d66222a17ab2684f5e42cc30f1db
+
+{
+    "current_password": "mylogin8#"
+}
+
+# PUT
+# 11. /api/auth/users/me/
+
+
+
+# PATCH
+# 12. /api/auth/users/me/
+
+
+
+# DELETE
+# 13. /api/auth/users/me/
+
+# GET
+# 14. /api/auth/users/profile/
+http://127.0.0.1:8000/api/auth/users/profile/
+Authorization: Token 3a3de06aab390c3af5534e877c4107b4ae2da7ef
+
+# PUT
+# 15. /api/auth/users/profile/
+PUT http://127.0.0.1:8000/api/auth/users/profile/
+Content-Type: application/json
+Authorization: Token 3a3de06aab390c3af5534e877c4107b4ae2da7ef
+
+{
+    "bio": "I am a software engineer"
+}
+
+# PATCH
+# 16. /api/auth/users/profile/
+
+##### Resettings #####
+
+# POST
+# 17. /api/auth/users/set_email/
+POST http://127.0.0.1:8000/api/auth/users/set_email/
+Content-Type: application/json
+Authorization: Token 3a3de06aab390c3af5534e877c4107b4ae2da7ef
+
+{
+    "current_password": "mylogin8#",
+    "new_email": "abdir@gmail.com",
+    "re_new_email": "abdir@gmail.com"
+}
+
+
+# POST
+# 18. /api/auth/users/reset_email/
+POST http://127.0.0.1:8000/api/auth/users/reset_email/
+Content-Type: application/json
+Authorization: Token 3a3de06aab390c3af5534e877c4107b4ae2da7ef
+
+{
+    "email": "abdir@gmail.com"
+}
+
+# POST
+# 19. /api/auth/users/reset_email_confirm/
+POST http://127.0.0.1:8000/api/auth/users/reset_email_confirm/
+Content-Type: application/json
+Authorization: Token 3a3de06aab390c3af5534e877c4107b4ae2da7ef
+
+{
+    "uid": "MTU",
+    "token": "c7app5-2b1da2aa4d7bb0b35df30bb8affe5444",
+    "new_email": "abdit@gmail.com",
+    "re_new_email": "abdit@gmail.com"
+}
+
+# POST
+# 20. /api/auth/users/set_password/
+POST http://127.0.0.1:8000/api/auth/users/set_password/
+Content-Type: application/json
+Authorization: Token 3a3de06aab390c3af5534e877c4107b4ae2da7ef
+
+{
+    "current_password": "mylogin8#",
+    "new_password": "mylogo8#",
+    "re_new_password": "mylogo8#"
+}
+
+# POST
+# 21. /api/auth/users/reset_password/
+POST http://127.0.0.1:8000/api/auth/users/reset_password/
+Content-Type: application/json
+
+{
+    "email": "abdit@gmail.com"
+}
+
+# POST
+# 22. /api/auth/users/reset_password_confirm/
+POST http://127.0.0.1:8000/api/auth/users/reset_password_confirm/
+Content-Type: application/json
+
+{
+    "uid": "MTU",
+    "token": "c7apt1-3246cc8cbc7433049ca069a0ca231ef6",
+    "new_password": "mylogo8#",
+    "re_new_password": "mylogo8#"
+}
+
+# POST
+# 23. /api/auth/users/token/logout/
+POST http://127.0.0.1:8000/api/auth/users/token/logout/
+Content-Type: application/json
+Authorization: Token 0c6aa84bf3e731191367e09d4196b7da18a64d63
+
+{}
+
+# POST
+# 24. /api/auth/users/jwt/create/
+POST http://127.0.0.1:8000/api/auth/users/jwt/create/
+Content-Type: application/json
+
+{
+    "email": "abdit@gmail.com",
+    "password": "mylogin8#"
+}
+
+
+# POST
+# 25. /api/auth/users/jwt/refresh/
+POST http://127.0.0.1:8000/api/auth/users/jwt/refresh/
+Content-Type: application/json
+
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczMTcxMTIzNCwiaWF0IjoxNzE2MTU5MjM0LCJqdGkiOiI0NTYzNDY5YzcxZWE0ZDQ5YmFjM2ZhZTU5ZTYxYjc5NyIsInVzZXJfaWQiOjE1fQ.mDsLQburdfVmewgcp-PZOXrGfuWrCp4Em-niYMcFqmg"
+}
+
+# POST
+# 26. /api/auth/users/jwt/verify/
+POST http://127.0.0.1:8000/api/auth/users/jwt/verify/
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzOTM1MzAyLCJpYXQiOjE3MTYxNTkyMzQsImp0aSI6ImRhNDEzMTIzNGQxMDQwMzJiMjdhZWE5MTRlMGRjNGJlIiwidXNlcl9pZCI6MTV9.sV-f63-k3di5C9_Gltxz_46swWRuU7j_cARdjBVTD3M"
+}
