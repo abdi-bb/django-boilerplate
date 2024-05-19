@@ -152,6 +152,7 @@ INSTALLED_APPS += [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt', # Uncomment when using JWT
+    'djoser',
     'dj_rest_auth',
     'django.contrib.sites',
     'allauth',
@@ -216,8 +217,9 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.TokenAuthentication',
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication', # Uncomment when using JWT
+        'rest_framework.authentication.TokenAuthentication', # For token based authentication
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # For JSON Web Token authentication
+        # 'dj_rest_auth.jwt_auth.JWTCookieAuthentication', # Uncomment when using JWT
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
@@ -225,28 +227,29 @@ REST_FRAMEWORK = {
 # JWT settings
 from datetime import timedelta
 SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
     'ACCESS_TOKEN_LIFETIME': timedelta(days=90),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=180),
 }
 
 # Rest auth settings
-REST_AUTH = {
-    # Serializer settings
-    'LOGIN_SERIALIZER': 'accounts.api.serializers.CustomUserLoginSerializer',
-    'REGISTER_SERIALIZER': 'accounts.api.serializers.CustomUserRegisterSerializer',
-    'USER_DETAILS_SERIALIZER': 'accounts.api.serializers.CustomUserDetailsSerializer',
+# REST_AUTH = {
+#     # Serializer settings
+#     'LOGIN_SERIALIZER': 'accounts.api.serializers.CustomUserLoginSerializer',
+#     'REGISTER_SERIALIZER': 'accounts.api.serializers.CustomUserRegisterSerializer',
+#     'USER_DETAILS_SERIALIZER': 'accounts.api.serializers.CustomUserDetailsSerializer',
 
-    # Password Settings
-    'OLD_PASSWORD_FIELD_ENABLED': True,
-    'LOGOUT_ON_PASSWORD_CHANGE': True,
+#     # Password Settings
+#     'OLD_PASSWORD_FIELD_ENABLED': True,
+#     'LOGOUT_ON_PASSWORD_CHANGE': True,
 
-    # from the library demo # Uncomment when using JWT
-    'SESSION_LOGIN': True,
-    'USE_JWT': True,
-    'JWT_AUTH_COOKIE': 'email-auth',
-    'JWT_AUTH_REFRESH_COOKIE': 'email-refresh-token',
-    'JWT_AUTH_HTTPONLY': False,
-}
+#     # from the library demo # Uncomment when using JWT
+#     'SESSION_LOGIN': True,
+#     'USE_JWT': True,
+#     'JWT_AUTH_COOKIE': 'email-auth',
+#     'JWT_AUTH_REFRESH_COOKIE': 'email-refresh-token',
+#     'JWT_AUTH_HTTPONLY': False,
+# }
 
 # DRF Spectacular
 SPECTACULAR_SETTINGS = {
@@ -255,6 +258,34 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
+}
+
+# Djoser settings
+DJOSER = {
+    # Urls
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+
+    # Registration and Password settings
+    'LOGIN_FIELD': 'email',
+    # 'USER_CREATE_PASSWORD_RETYPE': True,
+    'USERNAME_RESET_CONFIRM_RETYPE': True,
+    'SET_USERNAME_RETYPE': True,
+    'SET_PASSWORD_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    'SEND_ACTIVATION_EMAIL': True,
+    'LOGOUT_ON_PASSWORD_CHANGE': True,
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True, # Change to False(default) in production
+    'USERNAME_RESET_SHOW_EMAIL_NOT_FOUND': True, # Change to False(default) in production
+
+    'SERIALIZERS': {
+        # 'user_create': 'accounts.api.serializers.CustomUserRegisterSerializer',
+        
+    }
 }
 
 # activate the email account once the user clicks on the link
@@ -284,3 +315,7 @@ SITE_ID = 1
 # Celery
 CELERY_BROKER_URL = config("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = config("REDIS_BACKEND")
+
+# Frontend
+DOMAIN = 'myfrontendsite.com'
+SITE_NAME = 'My Frontend Site'

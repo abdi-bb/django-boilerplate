@@ -25,7 +25,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         _("email address"),
         unique=True,
-        help_text=_("Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."),
         # validators=[]
         error_messages={
             "unique": _("A user with that email already exists."),
@@ -52,7 +51,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     class Meta:
         verbose_name = _("user")
