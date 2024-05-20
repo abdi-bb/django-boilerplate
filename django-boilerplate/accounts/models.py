@@ -97,7 +97,13 @@ class Profile(models.Model):
         ordering = ('-created_at',)
 
     def __str__(self):
-        return self.user.get_full_name()
+        return self.user.email
+    
+    def activeness(self):
+        if self.user.is_active:
+            return "Active"
+        else:
+            return "Inactive"
     
     # resize image
     def save(self, *args, **kwargs):
