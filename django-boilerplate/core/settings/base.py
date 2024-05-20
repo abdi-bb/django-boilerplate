@@ -215,9 +215,10 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 # Rest Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.TokenAuthentication',
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication', # Uncomment when using JWT
+        # 'rest_framework.authentication.SessionAuthentication', # Session Based Authentication
+        'rest_framework.authentication.TokenAuthentication', # Token Based Authentication
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # JWT Authentication
+        # 'dj_rest_auth.jwt_auth.JWTCookieAuthentication', # JWT Cookie Authentication
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
@@ -241,9 +242,9 @@ REST_AUTH = {
     'LOGOUT_ON_PASSWORD_CHANGE': True,
 
     # from the library demo # Uncomment when using JWT
-    'SESSION_LOGIN': True,
+    # 'SESSION_LOGIN': True,
     'USE_JWT': True,
-    'JWT_AUTH_COOKIE': 'email-auth',
+    'JWT_AUTH_COOKIE': 'email-access-token',
     'JWT_AUTH_REFRESH_COOKIE': 'email-refresh-token',
     'JWT_AUTH_HTTPONLY': False,
 }

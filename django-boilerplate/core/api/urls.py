@@ -8,5 +8,5 @@ router.registry.extend(product_router.registry)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('users/', include('accounts.api.urls')),
+    path('auth/', include('accounts.api.urls')),
 ]

@@ -1,188 +1,210 @@
-# Django Rest Auth
-# Testing tokens (access=90days, refresh=180days)
-
-{
-  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzNzY2ODM1LCJpYXQiOjE3MTU5OTA4MzUsImp0aSI6ImI5Y2JjODgyZWRjYzRlZGM4YWJiN2Q3MjA2NjY1NjUwIiwidXNlcl9pZCI6MX0.ee2PQOAio8zJPIc8hjqa8u5pYITScQRZbEQ1PcabtgA",
-  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczMTU0MjgzNSwiaWF0IjoxNzE1OTkwODM1LCJqdGkiOiIxMzk4NDExYjY5MDQ0MzU2OGQ2MTJjOTc2MDJmNWE2MSIsInVzZXJfaWQiOjF9.YaSw8E3Q3BoaWX1hgLlcgl7-lavwPQu2MuLpHuadKm0",
-}
-
-# 1. Register a new user
-# Registration
-# /users/registration/ (POST)
-# first_name
-# last_name
-# password1
-# password2
-# email
-POST http://127.0.0.1:8000/api/users/registration/
+# 1. Registration
+# POST
+# /api/auth/registration/
+POST http://127.0.0.1:8000/api/auth/registration/
 Content-Type: application/json
 
 {
-    "email": "testuser9@gmail.com",
+    "email": "djrestauth6@gmail.com",
+    "first_name": "Rest",
+    "last_name": "Auth",
     "password1": "mylogin8#",
-    "password2": "mylogin8#",
-    "first_name": "Test",
-    "last_name": "User"
+    "password2": "mylogin8#"
 }
 
 
-# 2. Verify email for the registered new user
-# /users/registration/verify-email/ (POST)
-# key
-# Note If you set account email verification as mandatory, you have to add the VerifyEmailView with the used name. You need to import the view: from dj_rest_auth.registration.views import VerifyEmailView. Then add the url with the corresponding name: path('users/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent') to the urlpatterns list.
-POST http://127.0.0.1:8000/api/users/registration/verify-email/
+# 2. Activation
+# POST
+# /api/auth/registration/verify-email/
+POST http://127.0.0.1:8000/api/auth/registration/verify-email/
 Content-Type: application/json
 
 {
-    "key": "MQ:1s87WO:lMHmehYk9LDzhaerU1DxWRgCQXDkbnqWSiDoKreKsHM"
+    "key": "NA:1s8x5Q:bjcvhGHU2OlsZ7K1yom6S-0vswhqcsPQnGh8gNAUkdk"
 }
 
 
-# 3. Resend email verification in case the user requests it
-# /users/registration/resend-email/ (POST)
-# email
-# Resends the email verification
-POST http://127.0.0.1:8000/api/users/registration/resend-email/
-Content-Type: application/json
+3. **Registration Email Resend(Incase you lost the firt activation email**
+    ```http
+    POST http://127.0.0.1:8000/api/auth/registration/resend-email/
+    Content-Type: application/json
 
-{
-    "email": "notverified@gmail.com"
-}
+    {
+        "email": "djrestauthy@gmail.com"
+    }
+    ```
 
+4. **Account Confirmation Email**
+    ```http
+    POST http://127.0.0.1:8000/api/auth/account-confirm-email/
+    Content-Type: application/json
 
-# 4. Login the email verified user
-# Basic
-# /users/login/ (POST)
-# email
-# password
-# Returns Token key
-POST http://127.0.0.1:8000/api/users/login/
-Content-Type: application/json
+    {
+        "key": "Mg:1s8xvW:mHOdnhUAFaMG5-5NZAKe5c_ROBPiw-UqJT7uc1X_DEM"
+    }
+    ```
 
-{
-    "email": "testuser9@gmail.com",
-    "password": "mylogin8#"
-}
+### Token-Based Authentication
 
+5. **Login (Token-Based)**
+    ```http
+    POST http://127.0.0.1:8000/api/auth/login/
+    Content-Type: application/json
 
-# 5. Logout the logged in user
-# /users/logout/ (POST)
-# Note ACCOUNT_LOGOUT_ON_GET = True to allow logout using GET - this is the exact same configuration from allauth. NOT recommended, see: http://django-allauth.readthedocs.io/en/latest/views.html#logout
-POST http://127.0.0.1:8000/api/users/logout/
-Content-Type: application/json
+    {
+        "email": "djrestauth@gmail.com",
+        "password": "mylogin8#"
+    }
+    ```
 
+6. **Access Protected Endpoint Using Token**
+    ```http
+    GET http://127.0.0.1:8000/api/auth/profile/
+    Authorization: Token ed5d5479e458869f73f5b7d5620f018f828816b8
+    ```
 
-# 6. Reset password for the user in case they forget it
-# /users/password/reset/ (POST)
-# email
-POST http://127.0.0.1:8000/api/users/password/reset/
-Content-Type: application/json
+7. **Logout (Token-Based)**
+    ```http
+    POST http://127.0.0.1:8000/api/auth/logout/
+    Content-Type: application/json
 
-{
-    "email": "testuser9@gmail.com"
-}
+    {
+        "token": "ed5d5479e458869f73f5b7d5620f018f828816b8"
+    }
+    ```
 
+### JWT-Based Authentication
 
-# 7. Confirm the password reset (automatically triggered by the reset password)
-# /users/password/reset/confirm/ (POST)
-# uid
-# token
-# new_password1
-# new_password2
-# Note uid and token are sent in email after calling /users/password/reset/
-POST http://127.0.0.1:8000/api/users/password/reset/confirm/
-Content-Type: application/json
+8. **Login (JWT)**
+    ```http
+    POST http://127.0.0.1:8000/api/auth/login/
+    Content-Type: application/json
 
-{
-    "uid": "1",
-    "token": "c7748q-7a0014fad8f62586141292e758107b3b",
-    "new_password1": "mylogo8#",
-    "new_password2": "mylogo8#"
-}
+    {
+        "email": "djrestauth@gmail.com",
+        "password": "mylogin8#"
+    }
+    ```
 
+9. **Verify JWT**
+    ```http
+    POST http://127.0.0.1:8000/api/auth/token/verify/
+    Content-Type: application/json
 
-# 8. Change password for the logged in user
-# /users/password/change/ (POST)
-# new_password1
-# new_password2
-# old_password
-# Note OLD_PASSWORD_FIELD_ENABLED = True to use old_password.
-# Note LOGOUT_ON_PASSWORD_CHANGE = False to keep the user logged in after password change
-POST http://127.0.0.1:8000/api/users/password/change/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzNzY3NDg1LCJpYXQiOjE3MTU5OTEzNTgsImp0aSI6IjRiNzllYTExMTRhNjQyNzA5YzlhMjU2ZWQ5OWY5M2M1IiwidXNlcl9pZCI6MX0.Avao3lwtANItPaO1s8XxAAO5qnCqMeSyQE95hIzHgp4
-Content-Type: application/json
+    {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzOTY4Mjg5LCJpYXQiOjE3MTYxOTIyODksImp0aSI6IjM4N2I2YjYwZjBiMzRiNjQ5MzRkOWIwYTQ0YmYxNGRmIiwidXNlcl9pZCI6MTd9.xnFn-fPOM8BejYaEcKABGroaJfm4zwyubZif53steXI"
+    }
+    ```
 
-{
-    "new_password1": "mylogin8#",
-    "new_password2": "mylogin8#",
-    "old_password": "mylogo8#"
-}
+9. **Refresh JWT**
+    ```http
+    POST http://127.0.0.1:8000/api/auth/token/refresh/
+    Content-Type: application/json
 
+    {
+        "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczMTc0NDI4OSwiaWF0IjoxNzE2MTkyMjg5LCJqdGkiOiIzNDJkZmMzM2FhYzY0NmQ5YWFkZjFlYzBjNTc1OGYwNSIsInVzZXJfaWQiOjE3fQ.BBhkmKUmiJ7vdqiVaMuckofUlVobIwMILL-_e94CEvk"
+    }
+    ```
 
-# 9. Update the user (related to the auth user)
-# /users/user/ (GET, PUT, PATCH)
-# username
-# first_name
-# last_name
-# Returns pk, username, email, first_name, last_name
-http://127.0.0.1:8000/api/users/user/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzNzY3NDg1LCJpYXQiOjE3MTU5OTEzNTgsImp0aSI6IjRiNzllYTExMTRhNjQyNzA5YzlhMjU2ZWQ5OWY5M2M1IiwidXNlcl9pZCI6MX0.Avao3lwtANItPaO1s8XxAAO5qnCqMeSyQE95hIzHgp4
+10. **Access Protected Endpoint Using JWT**
+    ```http
+    GET http://127.0.0.1:8000/api/auth/profile/
+    Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzOTY4Mzg3LCJpYXQiOjE3MTYxOTIyODksImp0aSI6ImRkYzExMjFlZjkxZDQ1MjQ5MDFlY2ExOGI2NjY1MDI5IiwidXNlcl9pZCI6MTd9.CCelN8nfa3pbLn5RSKYVA8EwmS7ZJYz0B2GGjY8arx8
+    ```
 
+### Additional Endpoints
+11. **Password Change**
+    ```http
+    POST http://127.0.0.1:8000/api/auth/password/change/
+    Content-Type: application/json
+    Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzOTY4Mzg3LCJpYXQiOjE3MTYxOTIyODksImp0aSI6ImRkYzExMjFlZjkxZDQ1MjQ5MDFlY2ExOGI2NjY1MDI5IiwidXNlcl9pZCI6MTd9.CCelN8nfa3pbLn5RSKYVA8EwmS7ZJYz0B2GGjY8arx8
 
-# 10. Update the user profile (related to the profile data not the auth)
-# Profile
-# /users/profile/ (GET, PUT, PATCH)
-http://127.0.0.1:8000/api/users/profile/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1OTI4ODg1LCJpYXQiOjE3MTU5Mjg1ODUsImp0aSI6ImFlMDhlOTFkMTA0YzQwNzRiMzNkMjcxMGEzYzYxYmUzIiwidXNlcl9pZCI6MTd9.vSMrUvfEGvlkZetMvLUuvRcIYnNAomAzq9kXhUzWrAE
-
-# 11. Update the user profile (related to the profile data not the auth)
-# Profile
-# /users/profile/ (GET, PUT, PATCH)
-PUT http://127.0.0.1:8000/api/users/profile/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzNzA3MDYyLCJpYXQiOjE3MTU5MzEwNjIsImp0aSI6IjU2NWYwMTUwNDcyMzRmZjRiMjAyZDY4YjE2Mjk3ZDFjIiwidXNlcl9pZCI6MTd9.z2fLxqWgT83wPVMUjx5xUivX90JTId4eVI7nWKZCwY4
-Content-Type: application/json
-
-{
-    "bio": "I am a software engineer!"
-}
+    {
+        "old_password": "mylogin8#",
+        "new_password1": "newpassword8#",
+        "new_password2": "newpassword8#"
+    }
+    ```
 
 
+12. **Password Reset**
+    ```http
+    POST http://127.0.0.1:8000/api/auth/password/reset/
+    Content-Type: application/json
 
-# 11. Verify the jwt access token
-# /users/token/verify/ (POST)
-# token
-# Returns an empty JSON object.
-# Note USE_JWT = True to use token/verify/ route.
-# Note Takes a token and indicates if it is valid. This view provides no information about a token’s fitness for a particular use. Will return a HTTP 200 OK in case of a valid token and HTTP 401 Unauthorized with {"detail": "Token is invalid or expired", "code": "token_not_valid"} in case of a invalid or expired token.
-POST http://127.0.0.1:8000/api/users/token/verify/
-Content-Type: application/json
+    {
+        "email": "djrestauth@gmail.com"
+    }
+    ```
 
-{
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzNzY3MzU4LCJpYXQiOjE3MTU5OTEzNTgsImp0aSI6ImZkZDdiMmFlYzhiYzQyZjU5MGVlMjcyYjE4MjBlZDc1IiwidXNlcl9pZCI6MX0.wn66Im8mVAbbNxSndBA5U1DVLwQrW596TntIL_ahy60"
-}
+13. **Password Reset Confirm**
+    ```http
+    POST http://127.0.0.1:8000/api/auth/password/reset/confirm/
+    Content-Type: application/json
 
+    {
+        "uid": "h",
+        "token": "c7bg4t-942cfd4719eb71d423d4326054ba64bf",
+        "new_password1": "mylogin8#",
+        "new_password2": "mylogin8#"
+    }
+    ```
 
-# 12. Refresh the jwt access token using the refresh token
-# /users/token/refresh/ (POST) (see also)
-# refresh
-# Returns access
-# Note USE_JWT = True to use token/refresh/ route.
-# Note Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid. HTTP 401 Unauthorized with {"detail": "Token is invalid or expired", "code": "token_not_valid"} in case of a invalid or expired token.
-POST http://127.0.0.1:8000/api/users/token/refresh/
-Content-Type: application/json
+14. **Profile (GET)**
+    ```http
+    GET http://127.0.0.1:8000/api/auth/profile/
+    Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzOTY4Mjg5LCJpYXQiOjE3MTYxOTIyODksImp0aSI6IjM4N2I2YjYwZjBiMzRiNjQ5MzRkOWIwYTQ0YmYxNGRmIiwidXNlcl9pZCI6MTd9.xnFn-fPOM8BejYaEcKABGroaJfm4zwyubZif53steXI
+    ```
 
-{
-    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczMTU0MzM1OCwiaWF0IjoxNzE1OTkxMzU4LCJqdGkiOiJlOTBlZTlhMGY3ZTM0MmU1OTZkZDBiM2ExZDE0ZjdmOCIsInVzZXJfaWQiOjF9._tL173FU7XsGq35dMGKm4DoEdqTWkszNEIIfm4KJHHg"
-}
+15. **Profile (PUT)**
+    ```http
+    PUT http://127.0.0.1:8000/api/auth/profile/
+    Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzOTY4Mjg5LCJpYXQiOjE3MTYxOTIyODksImp0aSI6IjM4N2I2YjYwZjBiMzRiNjQ5MzRkOWIwYTQ0YmYxNGRmIiwidXNlcl9pZCI6MTd9.xnFn-fPOM8BejYaEcKABGroaJfm4zwyubZif53steXI
+    Content-Type: application/json
 
+    {
+        "bio": "I am a software developer"
+    }
+    ```
 
-# 13. Login using google
-# /users/google/ (POST)
-# access_token
-# Returns Token key
-POST http://127.0.0.1:8000/api/users/google/
-Content-Type: application/json
+16. **Profile (PATCH)**
+    ```http
+    PATCH http://127.0.0.1:8000/api/auth/profile/
+    Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzOTY4Mjg5LCJpYXQiOjE3MTYxOTIyODksImp0aSI6IjM4N2I2YjYwZjBiMzRiNjQ5MzRkOWIwYTQ0YmYxNGRmIiwidXNlcl9pZCI6MTd9.xnFn-fPOM8BejYaEcKABGroaJfm4zwyubZif53steXI
+    Content-Type: application/json
 
-{
-    "access_token": "ya"
-}
+    {
+        "bio": "I am a software developer"
+    }
+    ```
+
+17. **User (GET)**
+    ```http
+    GET http://127.0.0.1:8000/api/auth/user/
+    Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzOTY4Mjg5LCJpYXQiOjE3MTYxOTIyODksImp0aSI6IjM4N2I2YjYwZjBiMzRiNjQ5MzRkOWIwYTQ0YmYxNGRmIiwidXNlcl9pZCI6MTd9.xnFn-fPOM8BejYaEcKABGroaJfm4zwyubZif53steXI
+    ```
+
+16. **User (PUT)**
+    ```http
+    PUT http://127.0.0.1:8000/api/auth/user/
+    Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzOTY4Mjg5LCJpYXQiOjE3MTYxOTIyODksImp0aSI6IjM4N2I2YjYwZjBiMzRiNjQ5MzRkOWIwYTQ0YmYxNGRmIiwidXNlcl9pZCI6MTd9.xnFn-fPOM8BejYaEcKABGroaJfm4zwyubZif53steXI
+    Content-Type: application/json
+
+    {
+        "first_name": "RestUpdated",
+        "last_name": "AuthUpdated",
+        "email": "djrestauth@gmail.com"
+    }
+    ```
+
+17. **User (PATCH)**
+    ```http
+    PATCH http://127.0.0.1:8000/api/auth/user/
+    Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzOTY4Mjg5LCJpYXQiOjE3MTYxOTIyODksImp0aSI6IjM4N2I2YjYwZjBiMzRiNjQ5MzRkOWIwYTQ0YmYxNGRmIiwidXNlcl9pZCI6MTd9.xnFn-fPOM8BejYaEcKABGroaJfm4zwyubZif53steXI
+    Content-Type: application/json
+
+    {
+        "first_name": "RestUpdated"
+    }
+    ```
+
