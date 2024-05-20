@@ -216,6 +216,11 @@ Content-Type: application/json
     "password": "mylogin8#"
 }
 
+# Access protected endpoint using jwt
+http://127.0.0.1:8000/api/auth/users/me/
+Content-Type: application/json
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzOTYwOTI2LCJpYXQiOjE3MTYxODQ5MjYsImp0aSI6ImZlN2JhMzJlNTZjMDQzZTdiMzE4NjQxNmUxYjRiNDAzIiwidXNlcl9pZCI6MTV9.uXshUOu5bWB5Fvj6rwcc99fMlzkaWy_AysompJ1Hadk
+
 
 # POST
 # 25. /api/auth/users/jwt/refresh/
@@ -223,7 +228,7 @@ POST http://127.0.0.1:8000/api/auth/users/jwt/refresh/
 Content-Type: application/json
 
 {
-    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczMTcxMTIzNCwiaWF0IjoxNzE2MTU5MjM0LCJqdGkiOiI0NTYzNDY5YzcxZWE0ZDQ5YmFjM2ZhZTU5ZTYxYjc5NyIsInVzZXJfaWQiOjE1fQ.mDsLQburdfVmewgcp-PZOXrGfuWrCp4Em-niYMcFqmg"
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczMTcxMjQxMiwiaWF0IjoxNzE2MTYwNDEyLCJqdGkiOiIxYzNmNTc3ZjU3ZjA0M2UwYjJhMDcwYzgxODZkOTliZiIsInVzZXJfaWQiOjE1fQ.HhZXaQBPwfhxVW6YNPA32Ra9_9ASufzFqiNDCKXc8v0"
 }
 
 # POST
@@ -232,5 +237,5 @@ POST http://127.0.0.1:8000/api/auth/users/jwt/verify/
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzOTM1MzAyLCJpYXQiOjE3MTYxNTkyMzQsImp0aSI6ImRhNDEzMTIzNGQxMDQwMzJiMjdhZWE5MTRlMGRjNGJlIiwidXNlcl9pZCI6MTV9.sV-f63-k3di5C9_Gltxz_46swWRuU7j_cARdjBVTD3M"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzOTYwOTI2LCJpYXQiOjE3MTYxODQ5MjYsImp0aSI6ImZlN2JhMzJlNTZjMDQzZTdiMzE4NjQxNmUxYjRiNDAzIiwidXNlcl9pZCI6MTV9.uXshUOu5bWB5Fvj6rwcc99fMlzkaWy_AysompJ1Hadk"
 }
