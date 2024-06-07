@@ -60,16 +60,6 @@ class UserLoginAPIView(LoginView):
     serializer_class = CustomUserLoginSerializer
 
 
-class GoogleLogin(SocialLoginView):
-    """
-    Social authentication with Google
-    """
-    
-    adapter_class = GoogleOAuth2Adapter
-    callback_url = "call_back_url"
-    client_class = OAuth2Client
-
-
 class ProfileDetailsAPIView(RetrieveUpdateAPIView):
     """
     Get, Update user profile
@@ -95,4 +85,32 @@ class UserDetailsAPIView(RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+    
+class GoogleLogin(SocialLoginView):
+    """
+    Social authentication with Google
+    """
+    
+    adapter_class = GoogleOAuth2Adapter
+    client_class = OAuth2Client
+    callback_url = "http://127.0.0.1:8000"
 
+
+"""
+(5) This seems to be an error of the library: the dj-rest-auth, at some point, checks a redirect URL with the name redirect.
+This is a user redirect URL different from GOOGLE_REDIRECT_URL that the flow doesn’t need. So, in this case, define a Redirect view:
+"""
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import RedirectView
+
+
+class UserRedirectView(LoginRequiredMixin, RedirectView):
+    """
+    This view is needed by the dj-rest-auth-library in order to work the google login. It's a bug.
+    """
+
+    permanent = False
+
+    def get_redirect_url(self):
+        return "redirect-url"

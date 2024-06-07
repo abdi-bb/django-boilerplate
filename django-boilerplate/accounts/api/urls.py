@@ -56,3 +56,12 @@ from .views import ProfileDetailsAPIView
 urlpatterns += [
     path('profile/', ProfileDetailsAPIView.as_view(), name='profile-detail'),
 ]
+
+# Social login
+from .views import GoogleLogin
+from .views import UserRedirectView
+
+urlpatterns += [
+    path('google/', GoogleLogin.as_view(), name='google_login'),
+    path("~redirect/", view=UserRedirectView.as_view(), name="redirect")
+]

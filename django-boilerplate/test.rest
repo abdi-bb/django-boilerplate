@@ -208,3 +208,13 @@ Content-Type: application/json
     }
     ```
 
+18. **Social Auth**
+    ```http
+    POST http://127.0.0.1:8000/api/auth/google/
+    Content-Type: application/json
+
+    {
+        "code": "4/0AdLIrYcjYMq3ezOFk9zdI53rQITe83KUAu7PmlwH0lR9H9_iAothjfm4OURRTCt-z6MHfw"
+    }
+    ```
+
